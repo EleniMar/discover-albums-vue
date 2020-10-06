@@ -1,16 +1,47 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+<v-app>
+  
+    <NavBar />
+  
+
+  <!-- Sizes your content based upon application components -->
+  <v-main>
+
+    <!-- Provides the application the proper gutter -->
+    <v-container fluid>
+
+      <!-- If using vue-router -->
+      <router-view ></router-view>
+    </v-container>
+  </v-main>
+
+ 
+    <Footer />
+  
+</v-app>
   </div>
 </template>
 
+<script lang="ts">
+import Vue from 'vue'
+import NavBar from "@/components/NavBar.vue"
+import Footer from "@/components/Footer.vue"
+
+
+export default Vue.extend({
+  components: {
+    NavBar,
+    Footer,
+    
+  },
+  
+})
+</script>
+
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto,Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
