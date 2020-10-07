@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+     "deploy": "sh deploy.sh"
   },
   "dependencies": {
     "@types/vue-material": "git+https://github.com/calebsander/vue-material-types.git",

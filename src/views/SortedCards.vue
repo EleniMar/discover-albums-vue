@@ -1,27 +1,6 @@
 <template>
     <div >
-    <v-container >
-       
-    <div v-for="i in 5" :key="i" >
-         <v-row no-gutters>
-      <v-col
-        cols="12"
-        sm="6"
-      >
-        <AlbumInfo :id="sorted_id_list[i-1]" v-on:sendYear="getYear" />
-        
-       </v-col>
-       <v-col
-        cols="12"
-        sm="6"
-      >
-        <AlbumInfo :id="sorted_id_list[i+4]" v-on:sendYear="getYear" />
-        
-       </v-col>
-        </v-row> 
-    </div>
-      
-    </v-container>
+   <AlbumList :ids="sorted_id_list" />
      <v-btn >
      <router-link to="/" >
      Back
@@ -34,10 +13,11 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import AlbumInfo from '@/components/AlbumInfo.vue'
+import AlbumList from '@/components/AlbumList.vue'
 
 @Component({
   components: {
-    AlbumInfo,
+    AlbumList,
   }
 })
 export default class SortedCards extends Vue {
