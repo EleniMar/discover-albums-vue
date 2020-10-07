@@ -23,6 +23,12 @@ const routes: Array<RouteConfig> = [
     name: 'details',
     component: () => import(/* webpackChunkName: "details" */ '../views/Details.vue')
   },
+ 
+  {
+    path: '/sorted',
+    name: 'sorted',
+    component: () => import(/* webpackChunkName: "details" */ '../views/SortedCards.vue')
+  },
 ]
 
 const router = new VueRouter({

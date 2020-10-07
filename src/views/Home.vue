@@ -1,130 +1,91 @@
 <template>
-  <div class="search" >
-    
-    <h2>Discover new releases!</h2>
-      <v-container class="grey lighten-5">
-    <v-row no-gutters>
-      <v-col
-        cols="12"
-        sm="4"
-      >
-        <Card />
-      </v-col>
-      <v-col
-        cols="12"
-        sm="4"
-      >
-        <Card />
-      </v-col>
-      <v-col
-        cols="12"
-        sm="4"
-      >
-        <Card />
-      </v-col>
-    </v-row>
-
-    <v-row no-gutters>
-      <v-col
-        cols="12"
-        sm="4"
-      >
-        <Card />
-      </v-col>
-      <v-col
-        cols="12"
-        sm="4"
-      >
-        <Card />
-      </v-col>
-      <v-col
-        cols="12"
-        sm="4"
-      >
-        <Card />
-      </v-col>
-    </v-row>
-
-    <v-row no-gutters>
-      <v-col
-        cols="12"
-        sm="4"
-      >
-        <Card />
-      </v-col>
-      <v-col
-        cols="12"
-        sm="4"
-      >
-        <Card />
-      </v-col>
-      <v-col
-        cols="12"
-        sm="4"
-      >
-        <Card />
-      </v-col>
+<div >
+    <v-container >
        
-    </v-row>
-    <v-row no-gutters>
+    <div v-for="i in 5" :key="i" >
+         <v-row no-gutters>
       <v-col
         cols="12"
-        sm="4"
+        sm="6"
       >
-       
-      </v-col>
-      <v-col
-        cols="12"
-        sm="4"
-      >
-        <Card />
-      </v-col>
-      <v-col
-        cols="12"
-        sm="4"
-      >
-      
-      </v-col>
-       
-    </v-row>
-  </v-container>
+        <AlbumInfo :id="ids[i-1]" v-on:sendYear="getYear" />
         
+       </v-col>
+       <v-col
+        cols="12"
+        sm="6"
+      >
+        <AlbumInfo :id="ids[i+4]" v-on:sendYear="getYear" />
+        
+       </v-col>
+        </v-row> 
+    </div>
       
- 
-  </div>
+    </v-container>
+    <v-btn @click="goToSorted">
+     
+      Sort by year
+      
+    </v-btn>
+</div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Card from '@/components/Card.vue'
-export default Vue.extend({
-  components:{
-  Card
-}
+import { Component, Vue, Prop } from 'vue-property-decorator';
+import AlbumInfo from '@/components/AlbumInfo.vue'
+
+@Component({
+  components: {
+    AlbumInfo,
+  }
 })
+export default class Home extends Vue {
+   
+     ids =[500,550,100,128,159,200,666,750,560,10];
+     sorted_ids:any[]=[];
+     sorted_years:any[]=[];
+    
+    years_list: any[]=[];
+    
+
+    getYear (value: any) {
+      console.log(value);
+      this.years_list.push(value[1]);
+      this.sorted_years.push(value[1]);
+      this.sorted_ids.push(value[0]);
+      console.log(this.ids);
+      console.log(this.years_list);
+    }
+   
+
+    goToSorted() {
+        
+
+        console.log(this.sorted_ids);
+        console.log(this.sorted_years);
+        for( let i=0;i<this.sorted_years.length;i++){
+            console.log(this.sorted_ids);
+            console.log(this.sorted_years);
+            for ( let j=i+1;j<this.sorted_years.length;j++){
+                if(this.sorted_years[j]<this.sorted_years[i]){
+                    let temp_year = this.sorted_years[i];
+                    this.sorted_years[i]=this.sorted_years[j];
+                    this.sorted_years[j]=temp_year;
+                    let temp_id = this.sorted_ids[i];
+                    this.sorted_ids[i]=this.sorted_ids[j];
+                    this.sorted_ids[j]=temp_id;
+                }
+            }
+        }
+         
+        
+        
+        console.log(this.sorted_ids);
+    this.$router.push({ path: 'sorted', query: {
+        id_list:this.sorted_ids,
+        
+    }});
+  }
+    
+}
 </script>
-
-
-<style>
-.input-group {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-}
-
-.input-group-field {
-  margin-right: 0;
-}
-
-.input-group .input-group-button {
-  margin-left: 0;
-  border: none;
-}
-
-.input-group .md-raised {
-  margin-top: 0;
-  margin-bottom: 0;
-  border-radius: 0;
-}
-</style>
-

@@ -13,7 +13,7 @@
       ></v-progress-linear>
     </template>
 
-    <v-img
+        <v-img
       v-bind:src="getImgSource()" alt="Artist Picture" 
     ></v-img>
 
@@ -44,36 +44,47 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import axios from 'axios';
-
 @Component
-export default class Card extends Vue {
-  data={
-    album: Object,
+export default class AlbumInfo extends Vue {
+    @Prop({required: true}) readonly id: number|undefined
+    @Prop(String)  title: string|undefined
+    @Prop(String)  artist_name: string|undefined
+    @Prop({ default: 0 })
+  private _year: number|undefined;
+  public get year(): number|undefined {
+    return this._year;
+  }
+  public set year(value: number|undefined) {
+    this._year=value;
   }
  
-  created() {
-    this.getAlbum();
+    created() {
+    this.getAlbum(this.id);
+    
+    
   }
+
   baseUrl = 'https://api.discogs.com/releases/';
   my_key = '?key=FMvTlSGADQWmohiXndNO&secret=zaYzcFPxvIEZaQJeXpwhJDdPlHQYNTaR';
   query = '';
   img_src = '';
-  title= '';
-  year=0;
+  
+  
   tracklist:any;
   imageList:any;
-  show=false;
+
   
   album:any;
   
-   async getAlbum(){
+   async getAlbum(id: any){
     let message="";
     let response:any;
     while(true){
-      let id=Math.floor(Math.random()*15000);
+      
       response = await axios.get(this.baseUrl + id +this.my_key);
+      console.log(response);
       if(response.data!=null){
         
         break;
@@ -83,16 +94,17 @@ export default class Card extends Vue {
     
     
     this.album=(response.data);
-   this.data.album=this.album;
+   this.album=this.album;
     this.img_src = this.album.images[0].resource_url;
     this.year = this.album.year;
     
     this.title = this.album.title;
     this.tracklist = this.getTrackList(this.album.tracklist);
     this.imageList = this.getImgList(this.album.images);
-    
+    this.$emit( 'sendYear',[this.id,this.year]);
      
   }
+
   getTrackList(album_l:any){
     let list: any[]=[];
     album_l.forEach((element: any) => {
@@ -117,10 +129,7 @@ export default class Card extends Vue {
         return this.img_src;
     }
 
-
- 
-
-  viewDetails(album: any) {
+    viewDetails(album: any) {
     this.$router.push({ path: 'details', query: {
       album_id: album.id,
       artist_id: album.artists[0].id,
@@ -133,16 +142,7 @@ export default class Card extends Vue {
       tracklist: this.tracklist,
     }});
   }
+
+ 
 }
 </script>
-
-<style  scoped>
-  .md-card {
-    width: 320px;
-    margin: 4px;
-    display: inline-block;
-    vertical-align: top;
-  }
-</style>
-
-

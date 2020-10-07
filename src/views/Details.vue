@@ -34,29 +34,23 @@
     <v-divider class="mx-4"></v-divider>
 
     <v-card-text>
-        <v-list
-        
-      subheader
-      three-line>
+        <div>
              <h3>
         <strong>Tracklist: </strong>
              </h3>
-            <v-list-item-group
-         
-          color="primary"
-        >
-          <v-list-item
+            
+          <h5
             v-for="track in album.tracklist"
             :key="track.key"
            
           >
 
-            <v-list-item-content>
-              <v-list-item-title >{{track.key}} {{track}}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-        </v-list>
+            
+              {{track.key}} {{track}}
+            
+          </h5>
+        
+        </div>
 
     </v-card-text>
 
@@ -116,29 +110,27 @@
           align="center"
           justify="center"
         >
-        <v-list
         
-      subheader
-      three-line>
              <h3>
         <strong>You might also like: </strong>
              </h3>
-            <v-list-item-group
-         
-          color="primary"
-        >
-          <v-list-item
+            
+          <div
             v-for="rec in this.recommendations"
             :key="rec.key"
            
-          >
-
-            <v-list-item-content>
-              <v-list-item-title >{{rec.title}}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-        </v-list>
+          ><v-col
+        cols="12"
+        sm="12"
+      >
+            <AlbumInfo id="rec.id" />
+            <v-col
+        cols="12"
+        sm="12"
+      >
+          </div>
+          
+        
 
     </v-row>
     
@@ -149,6 +141,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import axios from 'axios';
+import AlbumInfo from '@/components/AlbumInfo.vue'
 @Component
 export default class Details extends Vue {
   album: any;
@@ -156,13 +149,7 @@ export default class Details extends Vue {
   baseUrl = 'https://api.discogs.com/artists/';
   my_key = '?key=FMvTlSGADQWmohiXndNO&secret=zaYzcFPxvIEZaQJeXpwhJDdPlHQYNTaR';
   recommendations:any;
-  async getRecommendations(){
-    
-    const response =  await axios.get(this.baseUrl + this.album.artist_id +'/releases'+this.my_key);
-    const releases = response.data.releases;
-    this.recommendations = this.getList(releases);
-    console.log(this.recommendations);
-  }
+
 
  getList(album_l:any){
     let list: any[]=[];
@@ -190,6 +177,14 @@ export default class Details extends Vue {
     };
     this.getRecommendations();
     
+  }
+
+    async getRecommendations(){
+    
+    const response =  await axios.get(this.baseUrl + this.album.artist_id +'/releases'+this.my_key);
+    const releases = response.data.releases;
+    this.recommendations = this.getList(releases);
+    console.log(this.recommendations);
   }
 
  

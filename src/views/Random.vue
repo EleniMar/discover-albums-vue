@@ -7,7 +7,7 @@
         cols="12"
         sm="6"
       >
-        <Card :key="cardKey"/>
+        <AlbumInfo :id="id" :key="cardKey"/>
       </v-col>
       <v-col
         cols="12"
@@ -45,23 +45,17 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Card from '@/components/Card.vue'
-export default Vue.extend({
-  components:{
-  Card
-},
-data() {
-    return {
-      cardKey: 0,
-    };
-  },
-  methods: {
-    forceRerender() {
-      this.cardKey += 1;
-    }
+import { Component, Vue, Prop } from 'vue-property-decorator';
+import AlbumInfo from '@/components/AlbumInfo.vue'
+
+@Component({
+  components: {
+    AlbumInfo,
   }
 })
+export default class SortedCards extends Vue {
+  id = Math.floor(Math.random()*15000);
+}
 </script>
 
 <style>
