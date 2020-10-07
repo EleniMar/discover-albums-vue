@@ -2,10 +2,11 @@
   "name": "discover-albums-vue",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/discover-albums-vue/",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-     "deploy": "sh deploy.sh"
+    "deploy": "sh deploy.sh",
   },
   "dependencies": {
     "@types/vue-material": "git+https://github.com/calebsander/vue-material-types.git",
@@ -18,7 +19,8 @@
     "vue-material": "^1.0.0-beta-13",
     "vue-property-decorator": "^8.4.2",
     "vue-router": "^3.2.0",
-    "vuetify": "^2.2.11"
+    "vuetify": "^2.2.11",
+    
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
